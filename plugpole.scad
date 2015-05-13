@@ -30,18 +30,24 @@ module axle(length = 10) {
 	color(steel_grey) cylinder(r = 1, h = length, center = true);
 }
 
-
-difference() {
-	union() {
+module plug_insert_part()
+{
+	translate([0, 0, sheathed_height * 2]) rotate([0, 180, 0])
+	difference() {
+		union() {
 			cylinder(r = outside_dia / 2, h = sheathed_height);
-			translate([0, 0, sheathed_height * 1.5]) cube(sheathed_height, center = true);
-	}
-	union () {
-		translate([0, 0, -0.5])
-			cylinder(r = bolt_dia / 2, h = (sheathed_height * (3 / 2)) + 1);
-		translate([0, 0, (sheathed_height * 1.5)]) rotate([0, 90, 0])
-			cylinder(r = pole_dia / 2, h = sheathed_height + 1, center = true);
+			translate([0, 0, sheathed_height * 1.5])
+				cube(sheathed_height, center = true);
+		}
+		union () {
+			translate([0, 0, -0.5])
+				cylinder(r = bolt_dia / 2, h = (sheathed_height * (3 / 2)) + 1);
+			translate([0, 0, (sheathed_height * 1.5)]) rotate([0, 90, 0])
+				cylinder(r = pole_dia / 2, h = sheathed_height + 1, center = true);
+		}
 	}
 }
 
-translate([0, 0, sheathed_height + 4]) rotate([0, 180, 0]) bolt(length = sheathed_height + 5);
+translate([0, 0, pole_dia])
+	bolt(length = sheathed_height + 5);
+plug_insert_part();
